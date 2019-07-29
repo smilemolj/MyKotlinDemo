@@ -2,14 +2,18 @@ package com.fengzhi.mykotlindemo.fragment
 
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import com.fengzhi.mykotlindemo.R
 import com.fengzhi.mykotlindemo.adapter.FunctionAdapter
 import com.fengzhi.mykotlindemo.base.BaseFragment
 import com.fengzhi.mykotlindemo.bean.HomeFunctionBean
 import com.fengzhi.mykotlindemo.util.GlideImageLoader
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.item_business.*
 import kotlinx.android.synthetic.main.toolbar.*
 import java.util.*
 
@@ -35,11 +39,11 @@ class HomeFragment : BaseFragment() {
         recyclerView.setHasFixedSize(true)
         recyclerView.adapter = mFunctionAdapter
 
-//        mFunctionAdapter?.addHeaderView(showRoleType(BUSINESS))
+        mFunctionAdapter?.addHeaderView(showRoleType(BUSINESS))
         //添加线条到列表头部
-//        mFunctionAdapter?.addHeaderView(showLineView())
+        mFunctionAdapter?.addHeaderView(showLineView())
         //追加线条
-//        mFunctionAdapter?.addFooterView(showLineView())
+        mFunctionAdapter?.addFooterView(showLineView())
 
         mFunctionAdapter?.setOnItemClickListener { adapter, view, position ->
             when (position) {
@@ -73,24 +77,28 @@ class HomeFragment : BaseFragment() {
         }
     }
 
-//    private fun showRoleType(type: Int): View? {
-//        val view: View? = null
-//        if (type == BUSINESS) {
-//            m_sales.text = "未读消息：100"
-//            y_sales.text = "通知：300"
-//            completion_rate.text = "我的会议：16"
-//            //                linearLayout.addView(view);
-//            return view
-//        } else if (type == CLIENT) {
-//        }
-//        return null
-//    }
+    private fun showRoleType(type: Int): View? {
+        var view: View? = null
+        if (type == BUSINESS) {
+            view = LayoutInflater.from(mContext).inflate(R.layout.item_business, null)
+            val msales = view!!.findViewById<TextView>(R.id.m_sales)
+            val ysales = view.findViewById<TextView>(R.id.y_sales)
+            val completiyuanonRate = view.findViewById<TextView>(R.id.completion_rate) //完成率
+            msales.text = "借款金额：6000(圆整)"
+            ysales.text = "借款期限：150(天)"
+            completiyuanonRate.text = "年利率：22%"
+            return view
+        } else if (type == CLIENT) {
+        }
+        return null
+    }
 
-//    private fun showLineView(): View {
-//        val view = LayoutInflater.from(mContext).inflate(R.layout.item_view, null)
-//        line_view.setBackgroundResource(R.color.color_f6f6f6)
-//        return view
-//    }
+    private fun showLineView(): View {
+        val view = LayoutInflater.from(mContext).inflate(R.layout.item_view, null)
+        val textView = view.findViewById<TextView>(R.id.line_view)
+        textView.setBackgroundResource(R.color.color_f6f6f6)
+        return view
+    }
 
     override fun getLayoutResId(): Int = R.layout.fragment_home
 

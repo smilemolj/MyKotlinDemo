@@ -3,7 +3,9 @@ package com.fengzhi.mykotlindemo.fragment
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.chad.library.adapter.base.BaseQuickAdapter
 import com.fengzhi.mykotlindemo.R
+import com.fengzhi.mykotlindemo.activity.MyInfoActivity
 import com.fengzhi.mykotlindemo.adapter.MessageAdapter
 import com.fengzhi.mykotlindemo.base.BaseFragment
 import com.fengzhi.mykotlindemo.bean.MessageBean
@@ -32,16 +34,12 @@ class ChatFragment : BaseFragment() {
     override fun initView(view: View, savedInstanceState: Bundle?) {
         bar_title.setText(R.string.string_chat)
         title_back.visibility = View.GONE
-        recyclerView.setLayoutManager(LinearLayoutManager(mContext))
+        recyclerView.layoutManager = LinearLayoutManager(mContext)
         initData()
         messageAdapter = MessageAdapter(R.layout.msg_list_item, messageBeans)
-//        messageAdapter.setOnItemClickListener { adapter, view, position ->
-//            startActivity(
-//                MyInfoActivity::class.java,
-//                null,
-//                false
-//            )
-//        }
+        messageAdapter!!.setOnItemClickListener { adapter, view, position ->
+            startActivity(MyInfoActivity::class.java, null, false)
+        }
         recyclerView.adapter = messageAdapter
     }
 
@@ -51,9 +49,9 @@ class ChatFragment : BaseFragment() {
             messageBean = MessageBean()
             messageBean.icon = (iconImgIDs[i])
             messageBean.nick = (nick[i])
-            messageBean.msginfo=(info[i])
-            messageBean.time=(time[i])
-            messageBean.mesnumber=(number[i])
+            messageBean.msginfo = (info[i])
+            messageBean.time = (time[i])
+            messageBean.mesnumber = (number[i])
             messageBeans.add(messageBean)
         }
     }
