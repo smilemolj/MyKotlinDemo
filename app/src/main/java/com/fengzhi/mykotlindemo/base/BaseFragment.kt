@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
 
 abstract class BaseFragment : Fragment() {
@@ -22,8 +23,12 @@ abstract class BaseFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(getLayoutResId(), container, false)
         mContext = requireActivity()
-        initView(inflater, container!!, savedInstanceState!!)
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initView(view, savedInstanceState)
     }
 
     protected fun showLoadingDialog(message: String) {
@@ -59,11 +64,9 @@ abstract class BaseFragment : Fragment() {
         }
     }
 
-    protected abstract fun initView(
-        inflater: LayoutInflater, container: ViewGroup,
-        savedInstanceState: Bundle
-    )
+    protected abstract fun initView(view: View, savedInstanceState: Bundle?)
 
+    @LayoutRes
     protected abstract fun getLayoutResId(): Int
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
@@ -77,7 +80,7 @@ abstract class BaseFragment : Fragment() {
         }
     }
 
-    protected fun onVisible() {
+    private fun onVisible() {
         lazyLoad()
     }
 
