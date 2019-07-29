@@ -5,7 +5,7 @@ import android.app.ActivityManager
 import android.content.Context
 import java.util.*
 
-object appManager : AppManager {
+object AppManager {
     object activityStack : Stack<Activity>()
 
     var count = 0
@@ -44,10 +44,10 @@ object appManager : AppManager {
         activityMgr.restartPackage(context.packageName)
         System.exit(0)
     }
+
     fun removeActivityFromStack(activity: Activity) {
         activityStack.remove(activity)
     }
 }
 
-interface AppManager {
-}
+
